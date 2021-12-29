@@ -182,7 +182,7 @@ namespace TravellerBotAPI.Support
 
 		private UWP(List<string> values)
 		{
-			Text = "UWP " + string.Join("", values.Take(7)) + $"-{values[7]}";
+			Text = $"UWP {string.Join("", values.Take(7))}-{values[7]}";
 			StarportQuality = values[0];
 			PlanetSize = values[1];
 			AtmosphereType = values[2];

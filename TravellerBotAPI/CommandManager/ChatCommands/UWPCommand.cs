@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using TravellerBotAPI.Controllers;
 using TravellerBotAPI.Support;
 using VkNet.Model;
 using VkNet.Model.RequestParams;
@@ -12,7 +9,7 @@ namespace TravellerBotAPI.Commands
 	public class UWPCommand : IChatCommand
 	{
 		public string Description => "Расшифрую код UWP";
-		public string Example => "UWP A515DBD-9";
+		public string Example => "UWP XXXXXXX-X";
 		public string[] Keys => new string[] { UWP.Pattern };
 
 		public bool SendReply(Message msg)

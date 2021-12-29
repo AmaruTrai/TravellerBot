@@ -8,8 +8,9 @@ namespace TravellerBotAPI.Commands
 {
 	public class CommandManager
 	{
-		private static IEnumerable<IChatCommand> Commands => new List<IChatCommand>() {
-			new UWPCommand()
+		public static IEnumerable<IChatCommand> Commands => new List<IChatCommand>() {
+			new UWPCommand(),
+			new InfoCommand()
 		};
 
 		public static bool TryGetChatCommand(string text, out IChatCommand command)
