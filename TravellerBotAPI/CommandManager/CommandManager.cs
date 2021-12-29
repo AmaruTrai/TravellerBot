@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 
 namespace TravellerBotAPI.Commands
@@ -10,6 +7,7 @@ namespace TravellerBotAPI.Commands
 	{
 		public static IEnumerable<IChatCommand> Commands => new List<IChatCommand>() {
 			new UWPCommand(),
+			new PlanetCommand(),
 			new InfoCommand()
 		};
 

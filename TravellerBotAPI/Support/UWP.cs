@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace TravellerBotAPI.Support
 {
@@ -21,10 +21,8 @@ namespace TravellerBotAPI.Support
 	public class UWP
 	{
 		private static readonly string UWPPattern = @"\bUWP[:]?[ ]*";
-		public static readonly string Pattern =
-			UWPPattern +
-			string.Concat(Enumerable.Repeat(@"[0-9A-Z][ ]?", 7)) +
-			@"[ ]?[-–][ ]?[0-9A-Z]";
+		private static readonly string CodPattern;
+		public static readonly string Pattern;
 
 		public string StarportQuality { get; private set; }
 		public string PlanetSize { get; private set; }
@@ -37,12 +35,21 @@ namespace TravellerBotAPI.Support
 
 		public string Text { get; private set; }
 
+		static UWP()
+		{
+			var builder = new StringBuilder();
+			builder.Insert(0, @"[0-9A-Z][ ]?", 7);
+			builder.Append(@"[ ]?[-–][ ]?[0-9A-Z]");
+			CodPattern = builder.ToString();
+			Pattern = UWPPattern + CodPattern;
+		}
+
 		public static bool TryParce(string text, out UWP uwp)
 		{
 			uwp = null;
-			var match = Regex.Match(text, Pattern, RegexOptions.IgnoreCase);
+			var match = Regex.Match(text, CodPattern, RegexOptions.IgnoreCase);
 			if (match.Success) {
-				text = Regex.Replace(text, UWPPattern, "");
+				text = match.Value;
 				var matches = Regex.Matches(text, @"[0-9A-Z]", RegexOptions.IgnoreCase);
 				var list = matches.ToList().Select(x => x.Value).ToList();
 				uwp = new UWP(list);
@@ -53,7 +60,7 @@ namespace TravellerBotAPI.Support
 
 		public IReadOnlyList<string> GetDescription()
 		{
-			var db = new TravellerDBContext();
+			var db = new UWPContext();
 			var temp = new List<string>();
 			temp.Add(db.StarportQuality.Find(StarportQuality).Value);
 			temp.Add(db.PlanetSize.Find(PlanetSize).Value);
@@ -172,7 +179,7 @@ namespace TravellerBotAPI.Support
 
 		public IReadOnlyList<string> GetTradeCodesDescription()
 		{
-			var db = new TravellerDBContext();
+			var db = new UWPContext();
 			var reply = new List<string>();
 			foreach (var cod in GetTradeCodes()) {
 				reply.AddRange(db.TradeCodes.Find(cod).Value.Split("\n"));

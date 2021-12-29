@@ -1,11 +1,10 @@
-﻿using System;
+using System;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using VkNet.Abstractions;
 using System.Net;
 using System.Text;
 using System.IO;
-using VkNet;
 
 namespace TravellerBotAPI.Support
 {
