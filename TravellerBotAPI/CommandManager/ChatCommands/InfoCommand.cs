@@ -2,7 +2,6 @@ using System;
 using VkNet.Model;
 using VkNet.Model.RequestParams;
 using TravellerBotAPI.Support;
-using System.Linq;
 using System.Text;
 
 namespace TravellerBotAPI.Commands

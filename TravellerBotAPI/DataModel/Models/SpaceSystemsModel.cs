@@ -1,5 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace TravellerBotAPI.DataModel
 {
+	[Keyless]
 	public class SpaceSystemsModel
 	{
 		public string Name { get; set; }

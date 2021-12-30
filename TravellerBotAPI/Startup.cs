@@ -9,7 +9,6 @@ using VkNet;
 using VkNet.Abstractions;
 using VkNet.Model;
 
-
 namespace TravellerBotAPI
 {
 	public class Startup

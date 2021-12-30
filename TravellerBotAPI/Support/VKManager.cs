@@ -28,7 +28,7 @@ namespace TravellerBotAPI.Support
 			var web = new WebClient();
 			var groupID = configuration.GetValue<long>("GroupID");
 			var serverInfo = vk.Photo.GetMessagesUploadServer(groupID);
-			var targetFile = new Random().Next().ToString() + ".jpg";
+			var targetFile = $"{new Random().Next()}.jpg";
 			ImageManager.GenerateUWPImage(text, targetFile);
 			var responseImg = web.UploadFile(serverInfo.UploadUrl, targetFile);
 			var strResponse = Encoding.ASCII.GetString(responseImg);

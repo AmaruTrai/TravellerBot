@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 
 namespace TravellerBotAPI.Controllers
 {
     [Serializable]
-    public class Updates
+    public class Message
     {
         /// <summary>
         /// Тип события
@@ -25,5 +25,11 @@ namespace TravellerBotAPI.Controllers
         /// </summary>
         [JsonProperty("group_id")]
         public long GroupId { get; set; }
-    }
+
+        /// <summary>
+        /// ID события
+        /// </summary>
+        [JsonProperty("event_id")]
+        public string EventId { get; set; }
+	}
 }

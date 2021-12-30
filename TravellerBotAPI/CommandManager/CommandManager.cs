@@ -8,6 +8,7 @@ namespace TravellerBotAPI.Commands
 		public static IEnumerable<IChatCommand> Commands => new List<IChatCommand>() {
 			new UWPCommand(),
 			new PlanetCommand(),
+			new StartCommand(),
 			new InfoCommand()
 		};
 

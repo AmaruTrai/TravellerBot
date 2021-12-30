@@ -14,7 +14,7 @@ namespace TravellerBotAPI
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<SpaceSystemsModel>().HasNoKey();
+
 		}
 	}
 }
