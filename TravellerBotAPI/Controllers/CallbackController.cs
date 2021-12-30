@@ -1,19 +1,12 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using Microsoft.AspNetCore.Mvc.Routing;
 using VkNet.Abstractions;
-using VkNet.Model;
 using VkNet.Utils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using TravellerBotAPI.Commands;
 using TravellerBotAPI.Support;
-using VkNet.Enums.SafetyEnums;
-using VkNet.Model.Keyboard;
-using VkNet.Model.RequestParams;
+using KeyboardBuilder = TravellerBotAPI.Support.KeyboardBuilder;
 
 namespace TravellerBotAPI.Controllers
 {
@@ -72,12 +65,13 @@ namespace TravellerBotAPI.Controllers
 					break;
 
 				case "message_event":
-					var responce = new VkResponse(message.Object);
-					long userId = responce["user_id"];
-					string eventId = responce["event_id"];
-					long peerId = responce["peer_id"];
+					var eventMessage = EventMessage.FromJson(message.Object.ToString());
+					if (CommandManager.TryGetCallback(eventMessage.Payload.CallbackKey, out var callback)) {
+						callback.Process(eventMessage);
+					}
 
-					VKManager.Instance.VK.Messages.SendMessageEventAnswer(eventId, userId, peerId);
+					VKManager.Instance.VK.Messages.SendMessageEventAnswer(
+						eventMessage.EventId, eventMessage.UserId, eventMessage.PeerId);
 
 					break;
 			}

@@ -3,6 +3,7 @@ using VkNet.Model;
 using VkNet.Model.RequestParams;
 using TravellerBotAPI.Support;
 using System.Text;
+using TravellerBotAPI.Transition;
 
 namespace TravellerBotAPI.Commands
 {
@@ -15,14 +16,12 @@ namespace TravellerBotAPI.Commands
 
 		public bool SendReply(Message msg)
 		{
-			var keyboard = new KeyboardBuilder();
-			keyboard.AppendCallbackButton("Help");
 
 			VKManager.Instance.VK.Messages.Send(new MessagesSendParams {
 				RandomId = new DateTime().Millisecond,
 				PeerId = msg.PeerId.Value,
 				Message = text,
-				Keyboard = keyboard.GetKeyboard()
+				Keyboard = ScreenManager.Screens[Screen.MainMenu].KeyBoard
 			});
 
 			return true;

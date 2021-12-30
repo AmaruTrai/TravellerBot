@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 using VkNet.Enums.SafetyEnums;
 using VkNet.Model.Keyboard;
 
@@ -11,6 +9,28 @@ namespace TravellerBotAPI.Support
 	{
 		private List<MessageKeyboardButton> currentLine;
 		private List<List<MessageKeyboardButton>> buttons { get; set; }
+
+		public static MessageKeyboardButton GetCallbackButton(string label, string payload = null)
+		{
+			var action = new MessageKeyboardButtonAction() {
+				Label = label,
+				Type = KeyboardButtonActionType.Callback,
+				Payload = payload
+			};
+
+			return new MessageKeyboardButton() { Action = action };
+		}
+
+		public static MessageKeyboardButton GetCallbackButton(string label, Payload payload = null)
+		{
+			var action = new MessageKeyboardButtonAction() {
+				Label = label,
+				Type = KeyboardButtonActionType.Callback,
+				Payload = JsonConvert.SerializeObject(payload)
+			};
+
+			return new MessageKeyboardButton() { Action = action };
+		}
 
 		public KeyboardBuilder()
 		{
@@ -33,14 +53,17 @@ namespace TravellerBotAPI.Support
 		public bool AppendCallbackButton(string label, string payload = null)
 		{
 			if (buttons.Count < 10) {
-				var action = new MessageKeyboardButtonAction() {
-					Label = label,
-					Type = KeyboardButtonActionType.Callback,
-					Payload = payload
-				};
-				currentLine.Add(new MessageKeyboardButton() {
-					Action = action
-				});
+				currentLine.Add(GetCallbackButton(label, payload));
+				return true;
+			}
+
+			return false;
+		}
+
+		public bool AppendCallbackButton(MessageKeyboardButton button)
+		{
+			if (buttons.Count < 10) {
+				currentLine.Add(button);
 				return true;
 			}
 
@@ -51,7 +74,5 @@ namespace TravellerBotAPI.Support
 		{
 			return new MessageKeyboard() {Buttons = buttons};
 		}
-
-
 	}
 }

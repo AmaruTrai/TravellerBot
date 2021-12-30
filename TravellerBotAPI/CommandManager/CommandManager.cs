@@ -12,6 +12,11 @@ namespace TravellerBotAPI.Commands
 			new InfoCommand()
 		};
 
+		private static IEnumerable<CallbackEvent> CallbackEvents => new List<CallbackEvent>() {
+			new SwitchCallback(),
+			new RandomTableValueCallback()
+		};
+
 		public static bool TryGetChatCommand(string text, out IChatCommand command)
 		{
 
@@ -26,6 +31,19 @@ namespace TravellerBotAPI.Commands
 			}
 
 			command = null;
+			return false;
+		}
+
+		public static bool TryGetCallback(string text, out CallbackEvent callback)
+		{
+			foreach (var item in CallbackEvents) {
+				if (item.Key == text) {
+					callback = item;
+					return true;
+				}
+			}
+
+			callback = null;
 			return false;
 		}
 	}

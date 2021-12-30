@@ -16,4 +16,11 @@ namespace TravellerBotAPI.DataModel
 	public class TechnologicalLevel : Table<string, string> { }
 	public class TradeCodes : Table<string, string> { }
 
+	public class Aging : Table<int, string> { }
+	public class AlliesAndEnemies : Table<int, string> { }
+	public class Draft : Table<int, string> { }
+	public class Injury : Table<int, string> { }
+	public class LifeEvent : Table<int, string> { }
+	public class PreCareerEvents : Table<int, string> { }
+
 }
