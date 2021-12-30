@@ -50,20 +50,72 @@ namespace TravellerBotAPI.Transition
 		public TableMenu()
 		{
 			var builder = new KeyboardBuilder();
+
 			var button = KeyboardBuilder.GetCallbackButton(
-				"Основное меню",
+				"Aging",
 				new Payload() {
-					CallbackKey = nameof(SwitchCallback),
-					TargetScreen = Screen.MainMenu
+					CallbackKey = nameof(RandomTableValueCallback),
+					Table = TableType.Aging
 				});
 
 			builder.AppendCallbackButton(button);
 
 			button = KeyboardBuilder.GetCallbackButton(
-				"Aging",
+				"Draft",
 				new Payload() {
 					CallbackKey = nameof(RandomTableValueCallback),
-					Table = TableType.Aging
+					Table = TableType.Draft
+				});
+
+			builder.AppendCallbackButton(button);
+
+			builder.AppendLine();
+
+			button = KeyboardBuilder.GetCallbackButton(
+				"AlliesAndEnemies",
+				new Payload() {
+					CallbackKey = nameof(RandomTableValueCallback),
+					Table = TableType.AlliesAndEnemies
+				});
+
+			builder.AppendCallbackButton(button);
+
+			button = KeyboardBuilder.GetCallbackButton(
+				"Injury",
+				new Payload() {
+					CallbackKey = nameof(RandomTableValueCallback),
+					Table = TableType.Injury
+				});
+
+			builder.AppendCallbackButton(button);
+
+			builder.AppendLine();
+
+			button = KeyboardBuilder.GetCallbackButton(
+				"LifeEvent",
+				new Payload() {
+					CallbackKey = nameof(RandomTableValueCallback),
+					Table = TableType.LifeEvent
+				});
+
+			builder.AppendCallbackButton(button);
+
+			button = KeyboardBuilder.GetCallbackButton(
+				"PreCareerEvents",
+				new Payload() {
+					CallbackKey = nameof(RandomTableValueCallback),
+					Table = TableType.PreCareerEvents
+				});
+
+			builder.AppendCallbackButton(button);
+
+			builder.AppendLine();
+
+			button = KeyboardBuilder.GetCallbackButton(
+				"Основное меню",
+				new Payload() {
+					CallbackKey = nameof(SwitchCallback),
+					TargetScreen = Screen.MainMenu
 				});
 
 			builder.AppendCallbackButton(button);

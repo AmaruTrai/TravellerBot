@@ -1,47 +1,31 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using TravellerBotAPI.Support;
-using TravellerBotAPI.Transition;
 using VkNet.Model.RequestParams;
-using System.Security.Cryptography;
 
 namespace TravellerBotAPI.Commands
 {
-	public enum TableType
-	{
-		Aging,
-		AlliesAndEnemies,
-		Draft,
-		Injury,
-		LifeEvent,
-		PreCareerEvents,
-	}
-
-	public interface ITable
-	{
-		public string GetRandomValue();
-	}
-
-	public class AgingTable : ITable
-	{
-		public string GetRandomValue()
-		{
-			var db = new InfoTablesContext();
-			var result = RandomNumberGenerator.GetInt32(-6, 2);
-			return db.Aging.Find(result).Value;
-		}
-	}
-
 	public class RandomTableValueCallback : CallbackEvent
 	{
+		private static List<ITable> tables = new List<ITable>() {
+			new AgingTable(),
+			new AlliesAndEnemiesTable(),
+			new DraftTable(),
+			new InjuryTable(),
+			new LifeEventTable(),
+			new PreCareerEventsTable()
+		};
+
 		public override void Process(EventMessage message)
 		{
 			var table = message.Payload.Table.Value;
-			var a = new AgingTable().GetRandomValue();
+			var text = tables.First(t => t.TableType == table).GetRandomValue();
 
 			VKManager.Instance.VK.Messages.Send(new MessagesSendParams {
 				RandomId = new DateTime().Millisecond,
 				PeerId = message.PeerId,
-				Message = a
+				Message = text
 			});
 		}
 	}

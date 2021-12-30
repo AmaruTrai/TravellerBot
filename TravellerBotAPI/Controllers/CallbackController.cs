@@ -70,8 +70,8 @@ namespace TravellerBotAPI.Controllers
 						callback.Process(eventMessage);
 					}
 
-					VKManager.Instance.VK.Messages.SendMessageEventAnswer(
-						eventMessage.EventId, eventMessage.UserId, eventMessage.PeerId);
+					//VKManager.Instance.VK.Messages.SendMessageEventAnswer(
+					//	eventMessage.EventId, eventMessage.UserId, eventMessage.PeerId);
 
 					break;
 			}
