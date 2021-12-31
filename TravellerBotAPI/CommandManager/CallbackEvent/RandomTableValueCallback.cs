@@ -19,13 +19,13 @@ namespace TravellerBotAPI.Commands
 
 		public override void Process(EventMessage message)
 		{
-			var table = message.Payload.Table.Value;
-			var text = tables.First(t => t.TableType == table).GetRandomValue();
+			var table = tables.First(t => t.TableType == message.Payload.Table.Value);
+			var result = table.GetRandomValue();
 
 			VKManager.Instance.VK.Messages.Send(new MessagesSendParams {
 				RandomId = new DateTime().Millisecond,
 				PeerId = message.PeerId,
-				Message = text
+				Message = result 
 			});
 		}
 	}

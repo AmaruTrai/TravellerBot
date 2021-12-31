@@ -17,6 +17,7 @@ namespace TravellerBotAPI.Commands
 	{
 		public TableType TableType { get; }
 		public string GetRandomValue();
+		public string GetDescription(int result);
 	}
 
 	public class AgingTable : ITable
@@ -26,7 +27,12 @@ namespace TravellerBotAPI.Commands
 		{
 			var db = new InfoTablesContext();
 			var result = RandomNumberGenerator.GetInt32(-6, 2);
-			return db.Aging.Find(result).Value;
+			return GetDescription(result) + db.Aging.Find(result).Value;
+		}
+
+		public string GetDescription(int result)
+		{
+			return $"Aging ({result}):\n";
 		}
 	}
 
@@ -37,7 +43,11 @@ namespace TravellerBotAPI.Commands
 		{
 			var db = new InfoTablesContext();
 			var result = DiceRoller.Roll(1, DiceType.d66);
-			return db.AlliesAndEnemies.Find(result).Value;
+			return GetDescription(result) + db.AlliesAndEnemies.Find(result).Value;
+		}
+		public string GetDescription(int result)
+		{
+			return $"Allies and Enemies ({result}):\n";
 		}
 	}
 
@@ -48,7 +58,11 @@ namespace TravellerBotAPI.Commands
 		{
 			var db = new InfoTablesContext();
 			var result = DiceRoller.Roll(1);
-			return db.Draft.Find(result).Value;
+			return GetDescription(result) + db.Draft.Find(result).Value;
+		}
+		public string GetDescription(int result)
+		{
+			return $"Draft ({result}):\n";
 		}
 	}
 
@@ -59,7 +73,11 @@ namespace TravellerBotAPI.Commands
 		{
 			var db = new InfoTablesContext();
 			var result = DiceRoller.Roll(1);
-			return db.Injury.Find(result).Value;
+			return GetDescription(result) + db.Injury.Find(result).Value;
+		}
+		public string GetDescription(int result)
+		{
+			return $"Injury ({result}):\n";
 		}
 	}
 
@@ -70,7 +88,12 @@ namespace TravellerBotAPI.Commands
 		{
 			var db = new InfoTablesContext();
 			var result = DiceRoller.Roll(2);
-			return db.PreCareerEvents.Find(result).Value;
+			return GetDescription(result) + db.PreCareerEvents.Find(result).Value;
+		}
+
+		public string GetDescription(int result)
+		{
+			return $"Pre-Career Events ({result}):\n";
 		}
 	}
 
@@ -81,7 +104,11 @@ namespace TravellerBotAPI.Commands
 		{
 			var db = new InfoTablesContext();
 			var result = RandomNumberGenerator.GetInt32(1, 73);
-			return db.LifeEvent.Find(result).Value;
+			return GetDescription(result) + db.LifeEvent.Find(result).Value;
+		}
+		public string GetDescription(int result)
+		{
+			return $"Life Event ({result}):\n";
 		}
 	}
 }

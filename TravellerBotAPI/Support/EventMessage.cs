@@ -25,6 +25,12 @@ namespace TravellerBotAPI.Support
 		/// </summary>
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public TableType? Table { get; set; } = null;
+
+		/// <summary>
+		/// Таблица из которой нужно взять значение.
+		/// </summary>
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		public PlanetAllegiance? Allegiance { get; set; } = null;
 	}
 
 	[Serializable]

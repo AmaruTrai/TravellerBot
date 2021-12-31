@@ -72,7 +72,7 @@ namespace TravellerBotAPI.Transition
 			builder.AppendLine();
 
 			button = KeyboardBuilder.GetCallbackButton(
-				"AlliesAndEnemies",
+				"Allies and Enemies",
 				new Payload() {
 					CallbackKey = nameof(RandomTableValueCallback),
 					Table = TableType.AlliesAndEnemies
@@ -92,7 +92,7 @@ namespace TravellerBotAPI.Transition
 			builder.AppendLine();
 
 			button = KeyboardBuilder.GetCallbackButton(
-				"LifeEvent",
+				"Life Event",
 				new Payload() {
 					CallbackKey = nameof(RandomTableValueCallback),
 					Table = TableType.LifeEvent
@@ -101,10 +101,22 @@ namespace TravellerBotAPI.Transition
 			builder.AppendCallbackButton(button);
 
 			button = KeyboardBuilder.GetCallbackButton(
-				"PreCareerEvents",
+				"Pre-Career Events",
 				new Payload() {
 					CallbackKey = nameof(RandomTableValueCallback),
 					Table = TableType.PreCareerEvents
+				});
+
+			builder.AppendCallbackButton(button);
+
+
+			builder.AppendLine();
+
+			button = KeyboardBuilder.GetCallbackButton(
+				"Случайная планета Third Imperium",
+				new Payload() {
+					CallbackKey = nameof(RandomPlanetCallback),
+					Allegiance = PlanetAllegiance.ThirdImperium
 				});
 
 			builder.AppendCallbackButton(button);

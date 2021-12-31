@@ -16,7 +16,7 @@ namespace TravellerBotAPI.Commands
 
 		public bool SendReply(Message msg)
 		{
-
+			PeerContext.SetUserToPeer(msg.PeerId.Value, msg.FromId.Value);
 			VKManager.Instance.VK.Messages.Send(new MessagesSendParams {
 				RandomId = new DateTime().Millisecond,
 				PeerId = msg.PeerId.Value,

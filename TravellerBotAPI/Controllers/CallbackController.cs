@@ -66,12 +66,17 @@ namespace TravellerBotAPI.Controllers
 
 				case "message_event":
 					var eventMessage = EventMessage.FromJson(message.Object.ToString());
-					if (CommandManager.TryGetCallback(eventMessage.Payload.CallbackKey, out var callback)) {
+
+					VKManager.Instance.VK.Messages.SendMessageEventAnswer(
+						eventMessage.EventId, eventMessage.UserId, eventMessage.PeerId);
+
+					if (
+						PeerContext.TryGetPeer(eventMessage.PeerId, out var peer) &&
+						peer.UserID == eventMessage.UserId &&
+						CommandManager.TryGetCallback(eventMessage.Payload.CallbackKey, out var callback)
+					) {
 						callback.Process(eventMessage);
 					}
-
-					//VKManager.Instance.VK.Messages.SendMessageEventAnswer(
-					//	eventMessage.EventId, eventMessage.UserId, eventMessage.PeerId);
 
 					break;
 			}
