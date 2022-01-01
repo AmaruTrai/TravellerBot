@@ -10,13 +10,22 @@ namespace TravellerBotAPI.Commands
 	{
 		public override void Process(EventMessage message)
 		{
-			var table = tables.First(t => t.TableType == message.Payload.Table.Value);
-			var result = table.GetRandomValue();
+			var db= new CharacterContext();
+			var character = db.CreateNewCharacter(message.UserId);
+			var values = new int[6];
+			values = values.Select(v => v = DiceRoller.Roll(2)).ToArray();
+			character.STR = values[0];
+			character.DEX = values[1];
+			character.END = values[2];
+			character.INT = values[3];
+			character.EDU = values[4];
+			character.SOC = values[5];
+			db.SaveChanges();
 
 			VKManager.Instance.VK.Messages.Send(new MessagesSendParams {
 				RandomId = new DateTime().Millisecond,
 				PeerId = message.PeerId,
-				Message = result
+				Message = string.Join(" ", values)
 			});
 		}
 	}

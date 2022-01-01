@@ -15,7 +15,8 @@ namespace TravellerBotAPI.Commands
 		private static IEnumerable<CallbackEvent> CallbackEvents => new List<CallbackEvent>() {
 			new SwitchCallback(),
 			new RandomTableValueCallback(),
-			new RandomPlanetCallback()
+			new RandomPlanetCallback(),
+			new RollCharacteristicsCallback()
 		};
 
 		public static bool TryGetChatCommand(string text, out IChatCommand command)
