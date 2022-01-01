@@ -1,7 +1,9 @@
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
 using TravellerBotAPI.DataModel;
+using TravellerBotAPI.Properties;
 
 namespace TravellerBotAPI
 {
@@ -33,7 +35,7 @@ namespace TravellerBotAPI
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlite(@"Data Source = Resources\TravellerDB.db;");
+			optionsBuilder.UseSqlite($"Data Source = TravellerDB.db;");
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)

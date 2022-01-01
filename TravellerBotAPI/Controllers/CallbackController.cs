@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using VkNet.Abstractions;
@@ -46,8 +47,9 @@ namespace TravellerBotAPI.Controllers
 
 		// POST api/<CallbackController>
 		[HttpPost]
-		public IActionResult Callback([FromBody] Message message)
+		public IActionResult Callback([FromHeader] string header, [FromBody] Message message)
 		{
+			_logger.Log(LogLevel.Information, header);
 			// Проверяем, что находится в поле "type" 
 			switch (message.Type)
 			{
