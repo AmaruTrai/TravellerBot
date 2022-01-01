@@ -1,23 +1,25 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace TravellerBotAPI.Commands
 {
 	public class CommandManager
 	{
-		public static IEnumerable<IChatCommand> Commands => new List<IChatCommand>() {
-			new UWPCommand(),
-			new PlanetCommand(),
-			new StartCommand(),
-			new InfoCommand()
-		};
+		public static readonly IEnumerable<IChatCommand> Commands;
 
-		private static IEnumerable<CallbackEvent> CallbackEvents => new List<CallbackEvent>() {
-			new SwitchCallback(),
-			new RandomTableValueCallback(),
-			new RandomPlanetCallback(),
-			new RollCharacteristicsCallback()
-		};
+		private static readonly IEnumerable<CallbackEvent> CallbackEvents;
+
+		static CommandManager()
+		{
+			var types = Assembly.GetExecutingAssembly().GetExportedTypes();
+			var events = types.Where(i => i.IsSubclassOf(typeof(CallbackEvent)));
+			CallbackEvents = events.Select(i => (CallbackEvent)Activator.CreateInstance(i));
+			var commands = types.Where(i => i.IsAssignableTo(typeof(IChatCommand)) && !i.IsInterface);
+			Commands = commands.Select(i => (IChatCommand)Activator.CreateInstance(i));
+		}
 
 		public static bool TryGetChatCommand(string text, out IChatCommand command)
 		{

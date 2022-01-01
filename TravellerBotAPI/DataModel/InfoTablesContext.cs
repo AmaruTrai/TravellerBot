@@ -12,6 +12,10 @@ namespace TravellerBotAPI
 		public DbSet<Injury> Injury { get; set; }
 		public DbSet<LifeEvent> LifeEvent { get; set; }
 		public DbSet<PreCareerEvents> PreCareerEvents { get; set; }
+		public DbSet<HairDescription> Hair { get; set; }
+		public DbSet<EyeDescription> Eye { get; set; }
+		public DbSet<GenderDescription> Gender { get; set; }
+		public DbSet<SkinToneDescription> SkinTone { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{

@@ -22,5 +22,9 @@ namespace TravellerBotAPI.DataModel
 	public class Injury : Table<int, string> { }
 	public class LifeEvent : Table<int, string> { }
 	public class PreCareerEvents : Table<int, string> { }
+	public class HairDescription : Table<int, string> { }
+	public class EyeDescription : Table<int, string> { }
+	public class GenderDescription : Table<int, string> { }
+	public class SkinToneDescription : Table<int, string> { }
 
 }

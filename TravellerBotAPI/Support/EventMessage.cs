@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System;
 using TravellerBotAPI.Commands;
+using TravellerBotAPI.DataModel;
 using TravellerBotAPI.Transition;
 
 namespace TravellerBotAPI.Support
@@ -31,6 +32,31 @@ namespace TravellerBotAPI.Support
 		/// </summary>
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public PlanetAllegiance? Allegiance { get; set; } = null;
+
+		/// <summary>
+		/// Таблица из которой нужно взять значение.
+		/// </summary>
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		public string TargetValue { get; set; } = null;
+
+
+		/// <summary>
+		/// Таблица из которой нужно взять значение.
+		/// </summary>
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		public AppearanceCallback.Stage? AppearanceStage{ get; set; } = null;
+
+		/// <summary>
+		/// Таблица из которой нужно взять значение.
+		/// </summary>
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		public Gender? Gender { get; set; } = null;
+
+		/// <summary>
+		/// Таблица из которой нужно взять значение.
+		/// </summary>
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		public bool IsAppearanceCallback { get; set; }
 	}
 
 	[Serializable]

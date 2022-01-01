@@ -1,7 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using TravellerBotAPI.Support;
+using VkNet.Model.Keyboard;
 using VkNet.Model.RequestParams;
 
 namespace TravellerBotAPI.Commands
@@ -12,20 +11,19 @@ namespace TravellerBotAPI.Commands
 		{
 			var db= new CharacterContext();
 			var character = db.CreateNewCharacter(message.UserId);
-			var values = new int[6];
-			values = values.Select(v => v = DiceRoller.Roll(2)).ToArray();
-			character.STR = values[0];
-			character.DEX = values[1];
-			character.END = values[2];
-			character.INT = values[3];
-			character.EDU = values[4];
-			character.SOC = values[5];
+			var values = character.RollCharacteristic();
 			db.SaveChanges();
+
+			MessageKeyboard keyboard = null;
+			if (message.Payload.IsAppearanceCallback) {
+				keyboard = AppearanceCallback.GetKeyboard(AppearanceCallback.Stage.Characteristic, message.UserId);
+			}
 
 			VKManager.Instance.VK.Messages.Send(new MessagesSendParams {
 				RandomId = new DateTime().Millisecond,
 				PeerId = message.PeerId,
-				Message = string.Join(" ", values)
+				Message = string.Join(" ", values),
+				Keyboard = keyboard
 			});
 		}
 	}

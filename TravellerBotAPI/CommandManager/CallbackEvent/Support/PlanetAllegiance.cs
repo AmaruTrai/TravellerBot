@@ -18,12 +18,12 @@ namespace TravellerBotAPI.Commands
 		public PlanetAllegiance TypeAllegiance { get; protected set; }
 		public List<string> Keys { get; protected set; }
 
-		public string GetRandomPlanet()
+		public SpaceSystemsModel GetRandomPlanet()
 		{
 			var db = new SpaceSystemsContext();
 			var selection = db.SpaceSystems.Where(s => Keys.Contains(s.Allegiance));
 			var planet = selection.Skip(RandomNumberGenerator.GetInt32(0, selection.Count() - 1)).First();
-			return $"Name: {planet.Name}\nUWP: {planet.UWP}\nAllegiance: {planet.AllegianceExt}";
+			return planet;
 		}
 	}
 

@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using VkNet.Abstractions;
@@ -16,6 +15,11 @@ namespace TravellerBotAPI.Controllers
 	{
 
 		/// <summary>
+		/// Конфигурация VK API
+		/// </summary>
+		private readonly IVkApi _vkApi;
+
+		/// <summary>
 		/// Конфигурация приложения
 		/// </summary>
 		private readonly IConfiguration _configuration;
@@ -25,9 +29,10 @@ namespace TravellerBotAPI.Controllers
 		/// </summary>
 		private readonly ILogger<CallbackController> _logger;
 
-		public CallbackController(IConfiguration configuration, ILogger<CallbackController> logger)
+		public CallbackController(IVkApi vkApi, IConfiguration configuration, ILogger<CallbackController> logger)
 		{
 			_configuration = configuration;
+			_vkApi = vkApi;
 			_logger = logger;
 		}
 
@@ -55,13 +60,19 @@ namespace TravellerBotAPI.Controllers
 					if (CommandManager.TryGetChatCommand(msg.Text, out var command)) {
 						command.SendReply(msg);
 					}
+
 					break;
 
 				case "message_event":
 					var eventMessage = EventMessage.FromJson(message.Object.ToString());
 
-					VKManager.Instance.VK.Messages.SendMessageEventAnswer(
-						eventMessage.EventId, eventMessage.UserId, eventMessage.PeerId);
+					try {
+						VKManager.Instance.VK.Messages.SendMessageEventAnswer(
+							eventMessage.EventId, eventMessage.UserId, eventMessage.PeerId);
+					} catch {
+						_logger.Log(LogLevel.Information, "Invalid event id");
+						break;
+					}
 
 					if (
 						PeerContext.TryGetPeer(eventMessage.PeerId, out var peer) &&
@@ -70,6 +81,7 @@ namespace TravellerBotAPI.Controllers
 					) {
 						callback.Process(eventMessage);
 					}
+
 					break;
 			}
 

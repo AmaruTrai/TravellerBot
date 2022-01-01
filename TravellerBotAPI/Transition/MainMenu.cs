@@ -1,5 +1,7 @@
+using System.Drawing;
 using TravellerBotAPI.Commands;
 using TravellerBotAPI.Support;
+using VkNet.Enums.SafetyEnums;
 
 namespace TravellerBotAPI.Transition
 {
@@ -25,6 +27,15 @@ namespace TravellerBotAPI.Transition
 					TargetScreen = Screen.CharacterGeneration
 				});
 
+			builder.AppendCallbackButton(button);
+
+			builder.AppendLine();
+			button = KeyboardBuilder.GetCallbackButton(
+				"Закрыть",
+				new Payload() {
+					CallbackKey = nameof(CloseCallback),
+				});
+			button.Color = KeyboardButtonColor.Negative;
 			builder.AppendCallbackButton(button);
 			KeyBoard = builder.GetKeyboard();
 			Text = "Основное меню";
