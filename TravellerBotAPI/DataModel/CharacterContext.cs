@@ -1,9 +1,6 @@
-using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
 using TravellerBotAPI.DataModel;
-using TravellerBotAPI.Properties;
 
 namespace TravellerBotAPI
 {

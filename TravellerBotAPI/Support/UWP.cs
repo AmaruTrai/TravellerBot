@@ -6,17 +6,6 @@ using System.Text;
 
 namespace TravellerBotAPI.Support
 {
-	public enum PlanetParameter
-	{
-		Starport_Quality = 1,
-		Planet_Size = 2,
-		Atmosphere_Type = 3,
-		Hydrographic = 4,
-		Population = 5,
-		Government_Type = 6,
-		Law_Level = 7,
-		Technological_Level = 8,
-	}
 
 	public class UWP
 	{

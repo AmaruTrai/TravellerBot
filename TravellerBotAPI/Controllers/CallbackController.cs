@@ -7,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using TravellerBotAPI.Commands;
 using TravellerBotAPI.Support;
-using KeyboardBuilder = TravellerBotAPI.Support.KeyboardBuilder;
 
 namespace TravellerBotAPI.Controllers
 {
@@ -15,11 +14,6 @@ namespace TravellerBotAPI.Controllers
 	[ApiController]
 	public class CallbackController : ControllerBase
 	{
-
-		/// <summary>
-		/// Конфигурация VK API
-		/// </summary>
-		private readonly IVkApi _vkApi;
 
 		/// <summary>
 		/// Конфигурация приложения
@@ -31,10 +25,9 @@ namespace TravellerBotAPI.Controllers
 		/// </summary>
 		private readonly ILogger<CallbackController> _logger;
 
-		public CallbackController(IVkApi vkApi, IConfiguration configuration, ILogger<CallbackController> logger)
+		public CallbackController(IConfiguration configuration, ILogger<CallbackController> logger)
 		{
 			_configuration = configuration;
-			_vkApi = vkApi;
 			_logger = logger;
 		}
 
@@ -47,9 +40,8 @@ namespace TravellerBotAPI.Controllers
 
 		// POST api/<CallbackController>
 		[HttpPost]
-		public IActionResult Callback([FromHeader] string header, [FromBody] Message message)
+		public IActionResult Callback([FromBody] Message message)
 		{
-			_logger.Log(LogLevel.Information, header);
 			// Проверяем, что находится в поле "type" 
 			switch (message.Type)
 			{
@@ -63,7 +55,6 @@ namespace TravellerBotAPI.Controllers
 					if (CommandManager.TryGetChatCommand(msg.Text, out var command)) {
 						command.SendReply(msg);
 					}
-
 					break;
 
 				case "message_event":
@@ -79,7 +70,6 @@ namespace TravellerBotAPI.Controllers
 					) {
 						callback.Process(eventMessage);
 					}
-
 					break;
 			}
 
