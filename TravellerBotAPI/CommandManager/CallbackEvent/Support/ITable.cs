@@ -72,7 +72,7 @@ namespace TravellerBotAPI.Commands
 		public string GetRandomValue()
 		{
 			var db = new InfoTablesContext();
-			var result = DiceRoller.Roll(1);
+			var result = DiceRoller.Roll(2);
 			return GetDescription(result) + db.Injury.Find(result).Value;
 		}
 		public string GetDescription(int result)
