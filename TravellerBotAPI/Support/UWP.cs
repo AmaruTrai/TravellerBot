@@ -6,6 +6,27 @@ using System.Text;
 
 namespace TravellerBotAPI.Support
 {
+	public enum TradeCod
+	{
+		Agricultural,
+		Asteroid,
+		Barren,
+		Desert,
+		FluidOceans,
+		Garden,
+		HighPopulation,
+		HighTech,
+		IceCapped,
+		Industrial,
+		LowPopulation,
+		LowTech,
+		NonAgricultural,
+		NonIndustrial,
+		Poor,
+		Rich,
+		Vacuum,
+		WaterWorld
+	}
 
 	public class UWP
 	{
@@ -69,9 +90,9 @@ namespace TravellerBotAPI.Support
 			return reply;
 		}
 
-		public IReadOnlyList<string> GetTradeCodes()
+		public IReadOnlyList<TradeCod> GetTradeCodes()
 		{
-			var codes = new List<string>();
+			var codes = new List<TradeCod>();
 			var atmo = Convert.ToInt32(AtmosphereType, 16);
 			var hydro = Convert.ToInt32(Hydrographic, 16);
 			var pop = Convert.ToInt32(Population, 16);
@@ -81,23 +102,23 @@ namespace TravellerBotAPI.Support
 			var tech = Convert.ToInt32(TechnologicalLevel, 16);
 
 			if (InRange(atmo, 4, 10) && InRange(hydro, 4, 9) && InRange(pop, 5, 8)) {
-				codes.Add("Ag");
+				codes.Add(TradeCod.Agricultural);
 			}
 
 			if (size == 0 && atmo == 0 && hydro == 0) {
-				codes.Add("As");
+				codes.Add(TradeCod.Asteroid);
 			}
 
 			if (pop == 0 && gov == 0 && law == 0) {
-				codes.Add("Ba");
+				codes.Add(TradeCod.Barren);
 			}
 
 			if (InRange(atmo, 2, 10) && hydro == 0) {
-				codes.Add("De");
+				codes.Add(TradeCod.Desert);
 			}
 
 			if (atmo >= 10 && hydro >= 1) {
-				codes.Add("Fl");
+				codes.Add(TradeCod.FluidOceans);
 			}
 
 			if (
@@ -105,38 +126,38 @@ namespace TravellerBotAPI.Support
 				(new int[]{5, 6, 8}).Contains(atmo) &&
 				InRange(hydro, 5, 8)
 			) {
-				codes.Add("Ga");
+				codes.Add(TradeCod.Garden);
 			}
 
 			if (pop >= 9) {
-				codes.Add("Hi");
+				codes.Add(TradeCod.HighPopulation);
 			}
 
 			if (InRange(atmo, 0, 2) && hydro >= 1) {
-				codes.Add("Ic");
+				codes.Add(TradeCod.IceCapped);
 			}
 
 			if (
 				(new int[] { 0, 1, 2, 4, 7, 9, 10, 11, 12 }).Contains(atmo) &&
 				pop >= 9
 			) {
-				codes.Add("In");
+				codes.Add(TradeCod.Industrial);
 			}
 
 			if (InRange(pop, 1, 4)) {
-				codes.Add("Lo");
+				codes.Add(TradeCod.LowPopulation);
 			}
 
 			if (InRange(atmo, 0, 4) && InRange(hydro, 0, 4) && pop >= 6) {
-				codes.Add("Na");
+				codes.Add(TradeCod.NonAgricultural);
 			}
 
 			if (InRange(pop, 4, 7)) {
-				codes.Add("Ni");
+				codes.Add(TradeCod.NonIndustrial);
 			}
 
 			if (InRange(atmo, 2, 6) && InRange(hydro, 0, 4)) {
-				codes.Add("Po");
+				codes.Add(TradeCod.Poor);
 			}
 
 			if (
@@ -144,23 +165,23 @@ namespace TravellerBotAPI.Support
 				InRange(pop, 6, 9) &&
 				InRange(gov, 4, 10)
 			) {
-				codes.Add("Ri");
+				codes.Add(TradeCod.Rich);
 			}
 
 			if (atmo == 0) {
-				codes.Add("Va");
+				codes.Add(TradeCod.Vacuum);
 			}
 
 			if ((InRange(atmo, 3, 10) || atmo >= 13) && hydro >= 10) {
-				codes.Add("Wa");
+				codes.Add(TradeCod.WaterWorld);
 			}
 
 			if (tech >= 12) {
-				codes.Add("Ht");
+				codes.Add(TradeCod.HighTech);
 			}
 
 			if (pop >= 1 && tech <= 5) {
-				codes.Add("Lt");
+				codes.Add(TradeCod.LowTech);
 			}
 
 			return codes;
@@ -171,7 +192,7 @@ namespace TravellerBotAPI.Support
 			var db = new UWPContext();
 			var reply = new List<string>();
 			foreach (var cod in GetTradeCodes()) {
-				reply.AddRange(db.TradeCodes.Find(cod).Value.Split("\n"));
+				reply.AddRange(db.TradeCodes.Find((int)cod).Value.Split("\n"));
 			}
 			return reply;
 		}

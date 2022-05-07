@@ -1,9 +1,14 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using TravellerBotAPI.Support;
 
 namespace TravellerBotAPI.DataModel
 {
+
 	public partial class Character
 	{
 		[Key]
@@ -21,6 +26,8 @@ namespace TravellerBotAPI.DataModel
 		public Hair? Hair { get; set; }
 		public Eye? Eye { get; set; }
 		public SkinTone? SkinTone { get; set; }
+
+		public Dictionary<Skills, int> Skills { get; set; } = new ();
 
 		public int[] RollCharacteristic()
 		{

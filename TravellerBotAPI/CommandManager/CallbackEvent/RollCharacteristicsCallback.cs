@@ -14,8 +14,10 @@ namespace TravellerBotAPI.Commands
 			var values = character.RollCharacteristic();
 			db.SaveChanges();
 
+			UserContext.CreateNewUser(message.UserId);
+
 			MessageKeyboard keyboard = null;
-			if (message.Payload.IsAppearanceCallback) {
+			if (message.Payload.IsAppearanceCallback == true) {
 				keyboard = AppearanceCallback.GetKeyboard(AppearanceCallback.Stage.Characteristic, message.UserId);
 			}
 

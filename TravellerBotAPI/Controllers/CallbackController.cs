@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
 using VkNet.Abstractions;
 using VkNet.Utils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using TravellerBotAPI.Commands;
+using Newtonsoft.Json;
+using TravellerBotAPI.DataModel;
 using TravellerBotAPI.Support;
 
 namespace TravellerBotAPI.Controllers
@@ -46,6 +49,7 @@ namespace TravellerBotAPI.Controllers
 		// POST api/<CallbackController>
 		[HttpPost]
 		public IActionResult Callback([FromBody] Message message)
+
 		{
 			// Проверяем, что находится в поле "type" 
 			switch (message.Type)
@@ -57,7 +61,8 @@ namespace TravellerBotAPI.Controllers
 
 				case "message_new":
 					var msg = VkNet.Model.Message.FromJson(new VkResponse(message.Object));
-					if (CommandManager.TryGetChatCommand(msg.Text, out var command)) {
+
+					if (Commands.CommandManager.TryGetChatCommand(msg.Text, out var command)) {
 						command.SendReply(msg);
 					}
 
@@ -65,7 +70,13 @@ namespace TravellerBotAPI.Controllers
 
 				case "message_event":
 					var eventMessage = EventMessage.FromJson(message.Object.ToString());
-
+#if DEBUG
+					if (
+						Commands.CommandManager.TryGetCallback(eventMessage.Payload.CallbackKey, out var callback)
+					) {
+						callback.Process(eventMessage);
+					}
+#else
 					try {
 						VKManager.Instance.VK.Messages.SendMessageEventAnswer(
 							eventMessage.EventId, eventMessage.UserId, eventMessage.PeerId);
@@ -77,11 +88,11 @@ namespace TravellerBotAPI.Controllers
 					if (
 						PeerContext.TryGetPeer(eventMessage.PeerId, out var peer) &&
 						peer.UserID == eventMessage.UserId &&
-						CommandManager.TryGetCallback(eventMessage.Payload.CallbackKey, out var callback)
+						Commands.CommandManager.TryGetCallback(eventMessage.Payload.CallbackKey, out var callback)
 					) {
 						callback.Process(eventMessage);
 					}
-
+#endif
 					break;
 			}
 

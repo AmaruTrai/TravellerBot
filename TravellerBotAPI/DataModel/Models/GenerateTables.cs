@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace TravellerBotAPI.DataModel
@@ -20,5 +21,16 @@ namespace TravellerBotAPI.DataModel
 		public int ID { get; set; }
 		public int Value { get; set; }
 		public int Hair { get; set; }
+	}
+
+	public class TradeCodesBackgroundSkills : Table<int, List<Skills>> {}
+
+	public class BackgroundSkillsCount
+	{
+		[Key]
+		public int EducationScore { get; set; }
+		public int LowTech { get; set; }
+		public int MidTech { get; set; }
+		public int HighTech { get; set; }
 	}
 }

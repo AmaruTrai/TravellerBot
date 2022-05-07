@@ -1,6 +1,8 @@
-using System.Linq;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using TravellerBotAPI.DataModel;
+using System.Linq;
+using Newtonsoft.Json;
 
 namespace TravellerBotAPI
 {
@@ -37,7 +39,13 @@ namespace TravellerBotAPI
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-
+			modelBuilder
+				.Entity<Character>()
+				.Property(e => e.Skills)
+				.HasConversion(
+					v => JsonConvert.SerializeObject(v),
+					v => JsonConvert.DeserializeObject<Dictionary<Skills, int>>(v)
+				);
 		}
 	}
 }

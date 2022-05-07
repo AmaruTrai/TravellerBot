@@ -18,7 +18,7 @@ namespace TravellerBotAPI.Commands
 			}
 
 			MessageKeyboard keyboard = null;
-			if (message.Payload.IsAppearanceCallback) {
+			if (message.Payload.IsAppearanceCallback == true) {
 				keyboard = AppearanceCallback.GetKeyboard(AppearanceCallback.Stage.Eye, message.UserId);
 			}
 

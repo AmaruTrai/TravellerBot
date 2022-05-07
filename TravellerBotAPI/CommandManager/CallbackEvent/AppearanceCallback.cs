@@ -171,10 +171,16 @@ namespace TravellerBotAPI.Commands
 		public override void Process(EventMessage message)
 		{
 			string text = string.Empty;
+			var db = new CharacterContext();
+			db.TryGetCharacterByID(message.UserId, out var character);
 
 			switch (message.Payload.AppearanceStage) {
 				case Stage.Characteristic:
-					text = "Сгенерируйте характеристики";
+					if (character != null) {
+						text = $"Текущие характеристики {character.GetCharacteristic()}";
+					} else {
+						text = "Сгенерируйте характеристики";
+					}
 					break;
 				case Stage.Gender:
 					text = "Выберите пол персонажа";

@@ -1,7 +1,5 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using TravellerBotAPI.DataModel;
 using TravellerBotAPI.Support;
 using VkNet.Model.Keyboard;
 using VkNet.Model.RequestParams;
@@ -19,7 +17,7 @@ namespace TravellerBotAPI.Commands
 			}
 
 			MessageKeyboard keyboard = null;
-			if (message.Payload.IsAppearanceCallback) {
+			if (message.Payload.IsAppearanceCallback == true) {
 				keyboard = AppearanceCallback.GetKeyboard(AppearanceCallback.Stage.Hair, message.UserId);
 			}
 

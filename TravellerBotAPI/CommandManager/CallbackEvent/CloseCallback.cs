@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using TravellerBotAPI.Support;
 using VkNet.Model.Keyboard;
 using VkNet.Model.RequestParams;

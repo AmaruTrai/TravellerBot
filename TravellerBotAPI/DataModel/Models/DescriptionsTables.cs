@@ -14,7 +14,7 @@ namespace TravellerBotAPI.DataModel
 	public class GovernmentType : Table<string, string> { }
 	public class LawLevel : Table<string, string> { }
 	public class TechnologicalLevel : Table<string, string> { }
-	public class TradeCodes : Table<string, string> { }
+	public class TradeCodes : Table<int, string> { }
 
 	public class Aging : Table<int, string> { }
 	public class AlliesAndEnemies : Table<int, string> { }

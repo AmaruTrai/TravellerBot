@@ -1,4 +1,3 @@
-using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +32,6 @@ namespace TravellerBotAPI
 		}
 
 		public DbSet<PeerModel> Peer { get; set; }
-
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			optionsBuilder.UseSqlite($"Data Source = TravellerDB.db;");

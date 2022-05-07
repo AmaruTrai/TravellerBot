@@ -56,7 +56,10 @@ namespace TravellerBotAPI.Support
 		/// Таблица из которой нужно взять значение.
 		/// </summary>
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-		public bool IsAppearanceCallback { get; set; }
+		public bool? IsAppearanceCallback { get; set; }
+
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		public Skills? SelectedSkill { get; set; }
 	}
 
 	[Serializable]
