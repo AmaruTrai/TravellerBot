@@ -42,6 +42,16 @@ namespace TravellerBotAPI.DataModel
 			return values;
 		}
 
+		public void SetCharacteristic(List<int> values)
+		{
+			STR = values[0];
+			DEX = values[1];
+			END = values[2];
+			INT = values[3];
+			EDU = values[4];
+			SOC = values[5];
+		}
+
 		public string GetCharacteristic()
 		{
 			return $"STR({STR}) DEX({DEX}) END({END}), INT({INT}), EDU({EDU}) SOC({SOC})";
