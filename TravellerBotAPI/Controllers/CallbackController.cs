@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using TravellerBotAPI.DataModel;
 using TravellerBotAPI.Support;
+using System;
 
 namespace TravellerBotAPI.Controllers
 {
@@ -57,7 +58,7 @@ namespace TravellerBotAPI.Controllers
 				// Если это уведомление для подтверждения адреса
 				case "confirmation":
 					// Отправляем строку для подтверждения 
-					return Ok(_configuration["Config:Confirmation"]);
+					return Ok(Environment.GetEnvironmentVariable("Confirmation"));
 
 				case "message_new":
 					var msg = VkNet.Model.Message.FromJson(new VkResponse(message.Object));

@@ -50,17 +50,17 @@ namespace TravellerBotAPI.Commands
 			}
 
 			var db = new CharacterContext();
-			var character = db.CreateNewCharacter(msg.UserId.Value);
+			var character = db.CreateNewCharacter(msg.FromId.Value);
 			character.SetCharacteristic(characteristics.Select(c => Convert.ToInt32(c, 16)).ToList());
 			db.SaveChanges();
 
-			UserContext.CreateNewUser(msg.UserId.Value);
+			UserContext.CreateNewUser(msg.FromId.Value);
 
 			VKManager.Instance.VK.Messages.Send(new MessagesSendParams
 			{
 				RandomId = new DateTime().Millisecond,
 				PeerId = msg.PeerId.Value,
-				Message = $"Текущие характеристики {character.GetCharacteristic()}"
+				Message = $"Характеристики установлены"
 			});
 
 			return true;

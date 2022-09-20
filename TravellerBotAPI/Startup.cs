@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
 using TravellerBotAPI.Support;
 using VkNet;
 using VkNet.Abstractions;
@@ -35,8 +36,8 @@ namespace TravellerBotAPI
 			services.AddSingleton<IVkApi>(sp =>
 			{
 				var api = new VkApi();
-				api.Authorize(new ApiAuthParams { AccessToken = Configuration["Config:AccessToken"] });
-				VKManager.Initialize(Configuration, api);
+				api.Authorize(new ApiAuthParams { AccessToken = Environment.GetEnvironmentVariable("AccessToken") });
+				VKManager.Initialize(api);
 				return api;
 			});
 		}

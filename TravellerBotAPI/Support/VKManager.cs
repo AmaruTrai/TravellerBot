@@ -12,21 +12,19 @@ namespace TravellerBotAPI.Support
 	{
 		public static readonly VKManager Instance = new VKManager();
 
-		private IConfiguration configuration;
 		private IVkApi vk;
 
 		public IVkApi VK => vk;
 
-		public static void Initialize(IConfiguration configuration, IVkApi vk)
+		public static void Initialize(IVkApi vk)
 		{
-			Instance.configuration = configuration;
 			Instance.vk = vk;
 		}
 
 		public IReadOnlyCollection<VkNet.Model.Attachments.Photo> UploadPhoto(IReadOnlyList<string> text)
 		{
 			var web = new WebClient();
-			var groupID = configuration.GetValue<long>("GroupID");
+			var groupID = long.Parse(Environment.GetEnvironmentVariable("GroupID"));
 			var serverInfo = vk.Photo.GetMessagesUploadServer(groupID);
 			var targetFile = $"{new Random().Next()}.jpg";
 			ImageManager.GenerateUWPImage(text, targetFile);
