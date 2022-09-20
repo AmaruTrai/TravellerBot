@@ -4,6 +4,5 @@
 <p> Для упрощения жизни себе и другим игрокам написал, данного бота, чтобы можно было быстро получать доступ к интересующей информации.</p>
 <p> Бот написан для платформы VK (<a href="https://dev.vk.com/api/callback/getting-started">CallBack API</a>). Исторически сложилось что он сообщество игроков было организовано в VK.</p>
 <p> В качестве хостинга используется <a href="https://dashboard.heroku.com/apps">Heroku</a>.</p>
-<p> Так как .Net официально не поддреживается Heroku, был дополинтельно использован <a href="https://github.com/jincod/dotnetcore-buildpack.git">Buildpack</a>.</p>
-
-
+<p> Так как .Net официально не поддерживается Heroku, был дополнительно использован <a href="https://github.com/jincod/dotnetcore-buildpack.git">Buildpack</a>.</p>
+<p> Если найдется еще кто-то играющий в Traveller, бота можно найти в <a href="https://vk.com/club204089026">сообществе</a>.</p>
